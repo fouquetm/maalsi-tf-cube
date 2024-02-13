@@ -1,6 +1,6 @@
 Archi Azure
 ---
-![Screenshot](aks-cluster-archi.png)
+![Screenshot](images/aks-cluster-archi.png)
 
 Provisioning Terraform
 ---
@@ -22,19 +22,19 @@ az aks get-credentials --resource-group rgName --name clusterName --overwrite-ex
 
 Déploiement d'une sample app
 ---
-![Screenshot](aks-store-architecture.png)
+![Screenshot](images/aks-store-architecture.png)
 From [Github](https://github.com/Azure-Samples/aks-store-demo)
 
 ```
 kubectl create ns myNamespace
 
-kubectl apply -f aks-store-quickstart.yaml -n myNamespace
+kubectl apply -f ./app/aks-store-quickstart.yaml -n myNamespace
 ```
 
 Validation fonctionnelle de l'app
 ---
 Aller dans le cluster, dans la partie Services & Ingresses, et cliquer sur l'IP publique
 
-![Screenshot](launch_app.png)
+![Screenshot](images/launch_app.png)
 
-![Screenshot](sample_app.png)
+![Screenshot](images/sample_app.png)
