@@ -1,3 +1,7 @@
+Archi Azure
+---
+![Screenshot](aks-cluster-archi.png)
+
 Provisioning Terraform
 ---
 terraform init -backend-config="backend.tfvars"
@@ -21,4 +25,5 @@ kubectl apply -f aks-store-quickstart.yaml -n myNamespace
 Validation fonctionnelle de l'app
 ---
 Aller dans le cluster, dans la partie Services & Ingresses, et cliquer sur l'IP publique
+
 ![Screenshot](launch_app.png)
