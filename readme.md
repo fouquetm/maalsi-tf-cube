@@ -23,6 +23,7 @@ az aks get-credentials --resource-group rgName --name clusterName --overwrite-ex
 Déploiement d'une sample app
 ---
 ![Screenshot](aks-store-architecture.png)
+From [Github](https://github.com/Azure-Samples/aks-store-demo)
 
 ```
 kubectl create ns myNamespace
