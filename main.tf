@@ -37,6 +37,7 @@ resource "azurerm_kubernetes_cluster" "main" {
     vm_size    = var.aks_nodes_vm_size
     enable_auto_scaling = true      # enable nodes auto-scaling
     vnet_subnet_id = azurerm_subnet.aks.id  # attach to aks subnet. prevent from virtual network auto-creation
+    temporary_name_for_rotation = "temp"
     node_count = 1
     min_count = 1
     max_count = 5
