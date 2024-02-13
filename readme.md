@@ -8,3 +8,5 @@ az aks get-credentials --resource-group rgName --name clusterName --overwrite-ex
 kubectl create ns myNamespace
 kubectl apply -f aks-store-quickstart.yaml -n myNamespace
 
+Aller dans le cluster, dans la partie Services & Ingresses, et cliquer sur l'IP publique
+![Screenshot](launch_app.png)
