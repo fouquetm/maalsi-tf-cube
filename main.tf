@@ -10,6 +10,8 @@ resource "azurerm_virtual_network" "main" {
   address_space       = ["10.224.0.0/12"]
   location            = azurerm_resource_group.main.location
   resource_group_name = azurerm_resource_group.main.name
+
+  tags = local.tags
 }
 
 resource "azurerm_subnet" "aks" {
@@ -82,4 +84,6 @@ resource "azurerm_key_vault" "main" {
   resource_group_name = azurerm_resource_group.main.name
   tenant_id           = azurerm_kubernetes_cluster.main.identity[0].tenant_id
   sku_name            = "standard"
+
+  tags = local.tags
 }
