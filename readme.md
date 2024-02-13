@@ -27,3 +27,5 @@ Validation fonctionnelle de l'app
 Aller dans le cluster, dans la partie Services & Ingresses, et cliquer sur l'IP publique
 
 ![Screenshot](launch_app.png)
+
+![Screenshot](sample_app.png)
