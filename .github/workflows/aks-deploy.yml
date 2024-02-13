@@ -1,0 +1,56 @@
+# 1. Créer une User Assigned Managed Identity dans votre groupe de ressource
+# 2. Créer une Federated credentials dans les settings de la Managed Identity
+#   - Federated credential scenario => Github
+#   - Organization => votre organization Github
+#   - Repository => nom du repo Git qui exécute le github actions
+#   - Entity => Branch
+#   - Branch => le nom de votre branche
+# 2. Affecter un rôle Contributor à cette Managed Identity sur votre abonnement Azure (Access Control)
+# 3. Créer des secrets dans Github
+#   - AZURE_CLIENT_ID => l'ID se récupère dans l'overview de la Managed Identity
+#   - AZURE_TENANT_ID => se récupère avec la commande az account list => tenantId
+#   - AZURE_SUBSCRIPTION_ID => l'ID se récupère dans l'overview de l'Abonnement
+#   - AZURE_STORAGE_ACCESS_KEY => Access Key à récupérer dans le Storage Account qui stocke le tfstate
+# 4. Tester la Github Actions
+
+
+name: Provision Azure infrastructure with Terraform
+
+on:
+  workflow_dispatch:
+
+jobs:
+  provision:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      # Checks out the repository this file is in
+      - uses: actions/checkout@v3
+
+      # Logs in with your Azure credentials
+      - name: Azure login
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      # Terraform
+      - name: Deploy Terraform files
+        run: |
+          # Exit when any command returns a failure status
+          set -e
+
+          # Add managed identity authentication prerequisites
+          echo 'access_key = "${{ secrets.AZURE_STORAGE_ACCESS_KEY }}"' | tee -a backend.tfvars
+  
+          # Initialize Terraform.
+          terraform init -input=false -backend-config="backend.tfvars"
+  
+          # Generate Terraform plan
+          terraform plan -input=false -out=app.tfplan
+  
+          # Apply the Terraform plan
+          terraform apply -auto-approve app.tfplan
